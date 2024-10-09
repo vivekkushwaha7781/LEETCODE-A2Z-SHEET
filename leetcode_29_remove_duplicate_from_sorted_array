@@ -1,0 +1,69 @@
+                                                              Remove Duplicates from Sorted Array
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Given an integer array nums sorted in non-decreasing order, 
+remove the duplicates in-place such that each unique element appears only once. 
+The relative order of the elements should be kept the same. Then return the number of unique elements in
+
+Example 2:
+
+Input: nums = [0,0,1,1,1,2,2,3,3,4]
+Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+
+
+NOTE:- NEED not to use extra memory o(1) SC
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+APPROACH-
+
+Initialization:
+
+1)-We have two pointers, i and j.
+     i is the slow pointer that tracks the position of the last unique element in the array.
+     j is the fast pointer that scans through the array to find the next unique element.
+     n holds the size of the input array nums.
+
+2)-Main Loop:
+
+The loop runs as long as j (the fast pointer) is less than the size of the array (n). 
+This ensures we scan through all elements in the array.
+Inside the loop, we check whether the element at i (last unique element) is not equal to the element at j. 
+If they are different, it means nums[j] is a new unique element.
+Unique Element Found:
+
+      If nums[i] != nums[j], it means the current element nums[j] is a new unique value:
+     We increment i to move the slow pointer forward, preparing to store the new unique value at the next position.
+     We assign nums[j] (new unique element) to nums[i], ensuring that all unique elements are grouped at the beginning of the array.
+   Increment the Fast Pointer:
+
+    Whether the current element is unique or not, we always increment j to continue scanning the rest of the array.
+
+Final Result:
+
+After the loop finishes, i will be pointing at the last unique element’s position. Since i is 0-indexed, the total number of unique elements is i + 1.
+The function returns i + 1 as the new length of the array without duplicates.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CODE:-
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        // i is the slow pointer, j is the fast pointer
+        int i = 0, j = 0;
+        int n = nums.size();  // n stores the size of the array
+        
+        // Iterate through the array using the fast pointer j
+        while (j < n) {
+            // If the value at i (last unique element) is not equal to the value at j (current element)
+            if (nums[i] != nums[j]) {
+                i++;               // Increment the slow pointer i
+                nums[i] = nums[j];  // Assign the value at j to the new position at i
+            }
+            j++;  // Always increment the fast pointer j to check the next element
+        }
+
+        // Return the length of the array without duplicates, which is i + 1
+        return i + 1;
+    }
+};
