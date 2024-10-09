@@ -1,0 +1,63 @@
+                                                             Reverse Words in a String
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Given an input string s, reverse the order of the words.
+
+A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+
+Return a string of the words in reverse order concatenated by a single space.
+
+Note that s may contain leading or trailing spaces or multiple spaces between two words. 
+The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+Example 1:
+
+Input: s = "the sky is blue"
+Output: "blue is sky the"
+Example 2:
+
+Input: s = "  hello world  "
+Output: "world hello"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CODE-
+class Solution {
+public:
+    string reverseWords(string s) {
+        int i = 0; // Pointer to traverse the input string.
+        int n = s.length(); // Store the length of the string.
+        
+        // Step 1: Reverse the entire string.
+        reverse(s.begin(), s.end()); 
+        
+        // l and r are two pointers used to mark the start and end of words.
+        int l = 0, r = 0;
+        
+        // Step 2: Traverse the reversed string and process each word.
+        while (i < n) {
+            // Move through characters until you find the end of a word (a space or end of string).
+            while (i < n && s[i] != ' ') {
+                s[r] = s[i]; // Copy the characters from position i to position r.
+                r++;
+                i++;
+            }
+
+            // If we found a word (i.e., l < r), reverse the word from index l to r-1.
+            if (l < r) {
+                reverse(s.begin() + l, s.begin() + r); // Reverse the individual word.
+                s[r++] = ' '; // After reversing the word, place a space after it.
+                l = r; // Move the start pointer (l) to the next position for the next word.
+            }
+
+            i++; // Move the pointer to skip over spaces.
+        }
+        
+        // Step 3: Return the result string, excluding the trailing space.
+        return s.substr(0, r - 1);
+    }
+};
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+The given C++ code reverses the order of words in a string s while maintaining the characters within each word in their original order. Here's a summary of how it works:
+
+1)-Reverse the Entire String: The entire string is reversed first, which reverses both the words and their characters.
+2)-Process Each Word: The code then scans through the reversed string, identifies each word, and reverses the characters back to their correct order.
+3)-Place Words Correctly: After reversing each word, it is placed in its correct position, followed by a space. Extra spaces are skipped.
+4)-Return Result: The final result is the string with words in reverse order, without a trailing space.
